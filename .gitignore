@@ -1,0 +1,15 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Local Database & Reports
+evidence_vault/*.db
+evidence_vault/reports/
+
+# Large Raw/Video files (agar 100MB se badi ho)
+*.raw
+
+# Virtual environment & keys
+.env
+venv/
+*.mp4
