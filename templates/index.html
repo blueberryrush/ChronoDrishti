@@ -4,446 +4,344 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ChronoDrishti | Sovereign Surveillance Forensic Workstation (NTRO)</title>
-  <link rel="stylesheet" href="/static/css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- ================= VIEW 1: DEFENSE-GRADE HOMEPAGE ================= -->
-  <div id="landingView" class="view-container active-view">
-    
-    <!-- Top Tactical Status Bar -->
-    <div class="system-ticker-bar">
-      <div class="ticker-content">
-        <span>● SOVEREIGN AIR-GAP: VERIFIED</span>
-        <span>● POSOCO 50Hz GRID LINK: LOCKED (50.012 Hz)</span>
-        <span>● BSA 2023 SEC 63 KERNEL: ACTIVE</span>
-        <span>● MASTER REPOSITORY: WORM-LOCKED</span>
+  <!-- Top Enterprise Institutional Bar -->
+  <aside class="defense-subbar">
+    <div class="subbar-inner">
+      <div class="subbar-tags">
+        <span class="shield-tag">RESTRICTED DEFENSE APPLICATION</span>
+        <span class="subbar-divider">/</span>
+        <span>NATIONAL TECHNICAL RESEARCH ORGANISATION (NTRO)</span>
+        <span class="subbar-divider">/</span>
+        <span>BSA 2023 SEC 63 CONFORMANT</span>
       </div>
-      <div class="ticker-node">NODE: NTRO-DEL-ALPHA-01</div>
+      <div class="subbar-status">
+        <span class="status-indicator"></span>
+        <span class="mono">AIR-GAPPED NODE • 127.0.0.1:5000</span>
+      </div>
     </div>
+  </aside>
 
-    <!-- Main Navigation Bar -->
-    <nav class="defense-nav">
-      <div class="nav-brand">
-        <div class="iris-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#00E5BA" stroke-width="2">
-            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
-            <circle cx="12" cy="12" r="4"></circle>
-            <line x1="12" y1="2" x2="12" y2="22"></line>
+  <!-- Navigation Bar (Magnet Witness Style) -->
+  <!-- Navigation Bar -->
+  <header class="master-header">
+    <div class="header-inner">
+      <div class="brand-group">
+        <div class="brand-crest">
+          <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="29" stroke="#A7F3D0" stroke-width="1.5" stroke-dasharray="3 2" />
+            <circle cx="32" cy="32" r="25" stroke="#1E3A2B" stroke-width="2" />
+            <line x1="32" y1="2" x2="32" y2="7.5" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="32" y1="56.5" x2="32" y2="62" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="2" y1="32" x2="7.5" y2="32" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="56.5" y1="32" x2="62" y2="32" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" />
+            <path d="M 8 32 C 16 16, 48 16, 56 32 C 48 48, 16 48, 8 32 Z" stroke="#1E3A2B" stroke-width="2.2" fill="#D1FAE5" fill-opacity="0.7" />
+            <circle cx="32" cy="32" r="13" stroke="#10B981" stroke-width="2" fill="#FFFFFF" />
+            <circle cx="32" cy="32" r="9" stroke="#059669" stroke-width="1.2" stroke-dasharray="2 2" />
+            <circle cx="32" cy="32" r="5" fill="#1E3A2B" stroke="#10B981" stroke-width="1.5" />
+            <circle cx="32" cy="32" r="1.8" fill="#10B981" />
           </svg>
         </div>
-        <div>
-          <div class="brand-title">CHRONODRISHTI <span class="brand-hindi">काल-दृष्टि</span></div>
-          <div class="brand-subtitle">SOVEREIGN SURVEILLANCE FORENSIC SUITE • NTRO</div>
+        <div class="brand-text">
+          <div class="brand-title">CHRONODRISHTI <span class="brand-badge">SOVEREIGN v2.4</span></div>
+          <div class="brand-subtitle">Surveillance DVR/NVR Reconstruction & ChronoMesh Platform</div>
         </div>
       </div>
 
-      <div class="nav-pills">
-        <a href="#stats-strip" class="nav-link">SYSTEM STATS</a>
-        <a href="#portals" class="nav-link">ACCESS PORTALS</a>
-        <a href="#capabilities" class="nav-link">CAPABILITIES</a>
-      </div>
-
-      <div class="nav-auth">
-        <button id="btnLaunchExaminer" class="btn-tactical-glow">ACCESS WORKSTATION ➔</button>
-      </div>
-    </nav>
-
-    <!-- Hero Section (No Cheap Background: Pure Vector Mesh) -->
-    <header class="defense-hero">
-      <div class="mesh-overlay"></div>
-      
-      <div class="hero-content">
-        <div class="defense-badge">
-          <span class="pulse-green"></span> RESTRICTED DEFENSE APPLICATION • BHARATIYA SAKSHYA ADHINIYAM (BSA) 2023
-        </div>
-        <h1 class="hero-headline">
-          Standardized DVR Evidence Recovery & <br>
-          <span class="teal-gradient-text">Physics-Anchored ChronoMesh Analysis</span>
-        </h1>
-        <p class="hero-lead">
-          Indigenous sovereign solution designed for the National Technical Research Organisation. 
-          Resolves proprietary CCTV ring-buffer fragmentation, recovers orphaned surveillance streams, 
-          and establishes mathematical court admissibility under Section 63 of BSA, 2023.
-        </p>
-
-        <div class="hero-actions">
-          <button id="btnHeroEnter" class="btn-primary-defense">ENTER FORENSIC TERMINAL</button>
-          <button id="btnScrollPortals" class="btn-outline-defense">EXPLORE ROLE PORTALS</button>
-        </div>
-      </div>
-
-      <!-- Live Server Telemetry Ribbon (Cards on Homepage) -->
-      <div id="stats-strip" class="telemetry-grid">
-        <div class="telemetry-card">
-          <span class="t-label">RECOVERABLE PROFILES</span>
-          <span class="t-value">HIK / DAHUA / XM</span>
-          <span class="t-sub text-teal">Multi-Vendor Demuxing</span>
-        </div>
-        <div class="telemetry-card">
-          <span class="t-label">OPTICAL ENF LOCK</span>
-          <span class="t-value">99.8% CONFIDENCE</span>
-          <span class="t-sub text-teal">POSOCO Power Grid Correlated</span>
-        </div>
-        <div class="telemetry-card">
-          <span class="t-label">BSA 2023 SECTION 63</span>
-          <span class="t-value">IMMUTABLE CERT</span>
-          <span class="t-sub text-teal">Automated Affidavit Sealing</span>
-        </div>
-        <div class="telemetry-card">
-          <span class="t-label">AIR-GAP SECURITY</span>
-          <span class="t-value">100% LOCALHOST</span>
-          <span class="t-sub text-teal">Zero Supply-Chain Leaks</span>
-        </div>
-      </div>
-    </header>
-
-    <!-- Role-Based Access Portals (Ply Cards) -->
-    <section id="portals" class="portals-section">
-      <div class="section-title-wrap">
-        <h2>CLEARANCE & ROLE-BASED PORTALS</h2>
-        <p>Segregated cryptographic access based on forensic and judicial responsibilities.</p>
-      </div>
-
-      <div class="portals-grid">
-        
-        <!-- Portal Card 1: Examiner -->
-        <div class="portal-card active-portal" id="portalExaminerCard">
-          <div class="portal-badge">TIER 1 • FULL CLEARANCE</div>
-          <div class="portal-icon">🔬</div>
-          <h3>Forensic Examiner Workstation</h3>
-          <p>Complete access to raw bit-stream carving, restoration studio, ChronoMesh multi-camera canvas, and physics telemetry.</p>
-          <ul class="portal-perks">
-            <li>✓ Deep NAL Byte Carving & Hex Inspector</li>
-            <li>✓ Low-Light CLAHE Restoration Studio</li>
-            <li>✓ 50Hz ENF & Visual Mic Shockwave Analysis</li>
-          </ul>
-          <button class="portal-btn btn-examiner-launch">LAUNCH EXAMINER SUITE ➔</button>
-        </div>
-
-        <!-- Portal Card 2: Field Officer -->
-        <div class="portal-card">
-          <div class="portal-badge">TIER 2 • CHAIN OF CUSTODY</div>
-          <div class="portal-icon">🛡️</div>
-          <h3>Field Ingestion Officer</h3>
-          <p>Rapid crime-scene DVR hard drive mounting, hardware write-blocker verification, and initial SHA-256 seal generation.</p>
-          <ul class="portal-perks">
-            <li>✓ Hardware WORM Lock Verification</li>
-            <li>✓ Pre-Flight Master Checksum Seal</li>
-            <li>✓ Evidence Sealing Bag Manifest Log</li>
-          </ul>
-          <button class="portal-btn" onclick="alert('Access Mode: Examiner session initialized with Field Ingest clearance.')">INGEST ARTIFACT ➔</button>
-        </div>
-
-        <!-- Portal Card 3: Judicial Auditor -->
-        <div class="portal-card">
-          <div class="portal-badge">TIER 3 • READ-ONLY COURTROOM</div>
-          <div class="portal-icon">⚖️</div>
-          <h3>Judicial Magistrate Auditor</h3>
-          <p>Read-only courtroom portal to verify evidentiary integrity, review chain-of-custody ledgers, and download Section 63 affidavits.</p>
-          <ul class="portal-perks">
-            <li>✓ Cryptographic Merkle Root Verification</li>
-            <li>✓ Read-Only Frame Step Inspection</li>
-            <li>✓ BSA 2023 Section 63 PDF Exporter</li>
-          </ul>
-          <button class="portal-btn" onclick="document.querySelector('[data-step=\'4\']').click(); document.getElementById('btnEnterTerminal').click();">JUDICIAL VERIFICATION ➔</button>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Core Capabilities Strip -->
-    <section id="capabilities" class="capabilities-section">
-      <div class="section-title-wrap">
-        <h2>THE 4-STAGE FORENSIC LIFECYCLE</h2>
-        <p>From damaged crime-scene media to legally admissible electronic evidence.</p>
-      </div>
-      <div class="caps-grid">
-        <div class="cap-card">
-          <div class="cap-num">STAGE 01</div>
-          <h4>Raw Ingestion</h4>
-          <p>Bit-stream mirroring under hardware write-blocking. Automatic SHA-256 freeze.</p>
-        </div>
-        <div class="cap-card">
-          <div class="cap-num">STAGE 02</div>
-          <h4>Restoration Studio</h4>
-          <p>Reconstructs lost SPS/PPS video headers and applies dynamic low-light CLAHE enhancement.</p>
-        </div>
-        <div class="cap-card">
-          <div class="cap-num">STAGE 03</div>
-          <h4>ChronoMesh 4D Matrix</h4>
-          <p>Synchronized multi-cam surveillance player anchored by 50Hz power grid telemetry.</p>
-        </div>
-        <div class="cap-card">
-          <div class="cap-num">STAGE 04</div>
-          <h4>BSA 2023 Sealing</h4>
-          <p>Produces tamper-proof Section 63 certificates with exact physical sector offset maps.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Professional Footer -->
-    <footer class="defense-footer">
-      <div class="footer-inner">
-        <div>
-          <div class="footer-title">NATIONAL TECHNICAL RESEARCH ORGANISATION (NTRO)</div>
-          <p class="footer-note">Sovereign Defense Systems Directorate • Government of India</p>
-        </div>
-        <div class="footer-badges">
-          <span class="f-badge">BSA 2023 SEC 63 COMPLIANT</span>
-          <span class="f-badge">ISO/IEC 27037 FORENSIC STANDARD</span>
-          <span class="f-badge">AES-256 VAULT SEALED</span>
-        </div>
-      </div>
-      <div class="footer-copyright">
-        © 2026 Sovereign Cyber Defense Operations. Strictly Restricted to Authorized Forensic Examiners.
-      </div>
-    </footer>
-
-  </div>
-
-  <!-- ================= VIEW 2: TACTICAL WORKSTATION ================= -->
-  <div id="workstationView" class="view-container">
-    
-    <!-- Top Workstation Tactical Bar -->
-    <header class="workstation-header">
-      <div class="ws-brand">
-        <button id="btnBackToHome" class="btn-icon">◀ HOMEPAGE</button>
-        <span class="ws-title">CHRONODRISHTI WORKSTATION</span>
-        <span class="ws-case" id="currentCaseDisplay">CASE: CASE_101</span>
-      </div>
-
-      <!-- 4-Stage Stepper -->
-      <nav class="lifecycle-stepper">
-        <button class="step-btn active" data-step="1"><span>1</span> INGESTION</button>
-        <button class="step-btn" data-step="2"><span>2</span> REPAIR STUDIO</button>
-        <button class="step-btn" data-step="3"><span>3</span> CHRONOMESH MATRIX</button>
-        <button class="step-btn" data-step="4"><span>4</span> BSA COURT SEAL</button>
+      <nav class="header-nav">
+        <a href="#portals" class="nav-link">Role Gateways</a>
+        <a href="#pillars" class="nav-link">5-Pillar Architecture</a>
+        <a href="#benchmark" class="nav-link">Capabilities Matrix</a>
       </nav>
 
-      <div class="ws-status">
-        <select id="caseSelector" class="case-dropdown"></select>
-        <span class="badge write-blocked">● WRITE-BLOCK ACTIVE</span>
+      <div class="header-cta">
+        <a href="#portals" class="btn-primary-header">ACCESS PORTALS ↓</a>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <!-- STAGE 1: INGESTION & UPLOAD -->
-    <section id="stage1" class="stage-section active-stage">
-      <div class="ingest-grid">
-        <div class="panel-box upload-zone">
-          <div class="panel-header">SEIZED PHYSICAL DISK / STREAM INGESTION</div>
-          <div class="drop-target">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00E5BA" stroke-width="1.5">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="17 8 12 3 7 8"/>
-              <line x1="12" y1="3" x2="12" y2="15"/>
-            </svg>
-            <h3>SEIZED BIT-STREAM RAW IMAGE MOUNTED</h3>
-            <p>Air-gapped physical disk image loaded into write-blocked memory buffer.</p>
-            <div class="mounted-file-tag">● TARGET ARTIFACT: evidence_dvr.raw (124,800 SECTORS)</div>
-          </div>
-          <div class="ingest-actions">
-            <button id="btnProceedToRepair" class="btn-primary-block">PROCEED TO REPAIR & CALIBRATION STUDIO ➔</button>
-          </div>
+  <!-- Hero Section -->
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-inner">
+      <div class="hero-meta-badge">
+        <span class="mono">PROBLEM STATEMENT ID: SIH26150135/500 • BLOCKCHAIN & CYBERSECURITY</span>
+      </div>
+      <h1 class="hero-heading">
+        Enterprise DVR/NVR Video Carving, <br>
+        <span class="hero-highlight">Physics Chrono-Lock & Statutory Admissibility</span>
+      </h1>
+      <p class="hero-subtext">
+        An indigenous sovereign forensic solution designed for the National Technical Research Organisation. 
+        Recovers corrupted surveillance streams from proprietary CCTV ring buffers, calculates Shannon sector 
+        entropy for unbranded DVRs, synchronizes feeds via 50Hz optical power grid fluctuations, and automatically 
+        generates Section 63 certificates under the Bharatiya Sakshya Adhiniyam, 2023.
+      </p>
+
+      <!-- Single Clear Direction -->
+      <div class="hero-button-row">
+        <a href="#portals" class="btn-hero-primary">SELECT OPERATIONAL CLEARANCE (3 ROLES) ↓</a>
+      </div>
+
+      <!-- Metrics Bar (Untouched, perfectly styled) -->
+      <div class="hero-metrics-bar">
+        <div class="metric-block">
+          <span class="metric-value">HIK / DAHUA / XM</span>
+          <span class="metric-label">Proprietary Formats Supported</span>
         </div>
-
-        <div class="panel-box ingest-meta">
-          <div class="panel-header">PRE-FLIGHT CRYPTOGRAPHIC INTEGRITY</div>
-          <div class="meta-row"><span class="k">Hardware Interface:</span><span class="v">WORM Write-Blocker (Read-Only)</span></div>
-          <div class="meta-row"><span class="k">Master SHA-256 Digest:</span><span class="v mono" id="ingestHash">Calculating...</span></div>
-          <div class="meta-row"><span class="k">Bit-Stream Integrity:</span><span class="v text-teal">100% BIT-FOR-BIT MATCH</span></div>
-          <div class="meta-row"><span class="k">Carved Channels:</span><span class="v" id="ingestChannels">--</span></div>
-          <div class="meta-row"><span class="k">Partition Architecture:</span><span class="v">Hikvision B-Tree / Interleaved Raw</span></div>
-          <div class="meta-row"><span class="k">Server Database State:</span><span class="v text-teal">SQLite Persistent Store Active</span></div>
+        <div class="metric-block">
+          <span class="metric-value mono">50.00 Hz ± 0.02</span>
+          <span class="metric-label">POSOCO National Grid Lock</span>
+        </div>
+        <div class="metric-block">
+          <span class="metric-value mono">&lt; 300 MB RAM</span>
+          <span class="metric-label">mmap Chunked Sliding Window</span>
+        </div>
+        <div class="metric-block">
+          <span class="metric-value">BSA SEC 63</span>
+          <span class="metric-label">Legally Admissible Affidavit</span>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- STAGE 2: RESTORATION & CALIBRATION STUDIO ("SAHI KARNA") -->
-    <section id="stage2" class="stage-section">
-      <div class="studio-grid">
+  <!-- 3 Role-Based Forensic Portals -->
+  <section id="portals" class="section-block bg-elevated">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-kicker">SEGREGATED WORKFLOWS</span>
+        <h2 class="section-title">Institutional Role-Based Access Gateways</h2>
+        <p class="section-desc">Air-gapped operational sandboxes customized for technical examiners, first-response officers, and courtroom magistrates.</p>
+      </div>
+
+      <div class="portals-trio-grid">
         
-        <!-- Left: Repair Action Checklist & Sliders -->
-        <div class="panel-box studio-actions">
-          <div class="panel-header">STREAM RESTORATION CHECKLIST</div>
-          <div class="checklist">
-            <label class="check-item">
-              <input type="checkbox" id="chkHeaders" checked>
-              <div>
-                <strong>Reconstruct Missing SPS/PPS Headers</strong>
-                <p>Injects synthetic H.264 parameter sets into damaged IDR frames.</p>
-              </div>
-            </label>
-            <label class="check-item">
-              <input type="checkbox" id="chkDemux" checked>
-              <div>
-                <strong>Ring-Buffer Boundary Demux</strong>
-                <p>Separates overlapping camera streams from overwritten sectors.</p>
-              </div>
-            </label>
-            <label class="check-item">
-              <input type="checkbox" id="chkClahe" checked>
-              <div>
-                <strong>Low-Light CLAHE Contrast Enhancement</strong>
-                <p>Equalizes dark surveillance footage to reveal target details.</p>
-              </div>
-            </label>
+        <!-- Portal 1: Examiner -->
+        <div class="portal-box active-portal-box">
+          <div class="portal-badge-row">
+            <span class="badge-role">TIER 1 • FULL INVESTIGATION</span>
+            <span class="badge-tag">LABORATORY SUITE</span>
           </div>
-
-          <div class="studio-sliders">
-            <div class="slider-group">
-              <div class="slider-head">
-                <span>Contrast / Exposure Gain:</span>
-                <span id="contrastVal" class="mono text-teal">1.8x</span>
-              </div>
-              <input type="range" id="contrastSlider" min="1.0" max="3.0" step="0.1" value="1.8">
-            </div>
-
-            <div class="slider-group">
-              <div class="slider-head">
-                <span>Clock-Drift Calibration:</span>
-                <span id="driftVal" class="mono text-teal">+14.2s</span>
-              </div>
-              <input type="range" id="driftSlider" min="0" max="30" step="0.2" value="14.2">
-            </div>
+          <h3 class="portal-name">Forensic Examiner Workstation</h3>
+          <p class="portal-description">
+            Complete low-level analysis suite for digital forensic scientists. Carve raw bit-streams, reconstruct lost video parameter sets, and synchronize multi-channel playback.
+          </p>
+          <ul class="portal-feature-list">
+            <li><strong>2-Tier NAL Carving:</strong> Isolates raw H.264/H.265 frames across overwritten circular sectors.</li>
+            <li><strong>Parametric Restoration:</strong> Injects synthetic SPS/PPS headers and CLAHE low-light equalization.</li>
+            <li><strong>ChronoMesh 4D Matrix:</strong> Unified multi-camera playback anchored with 50Hz grid frequency tracking.</li>
+          </ul>
+          <div class="portal-foot">
+            <a href="/examiner" class="btn-card-launch">ACCESS EXAMINER WORKBENCH ➔</a>
           </div>
-
-          <button id="btnCommitToMatrix" class="btn-primary-block">COMMIT REPAIRED STREAMS TO CHRONOMESH ➔</button>
         </div>
 
-        <!-- Right: Before vs After Split Comparison Viewer -->
-        <div class="panel-box studio-preview">
-          <div class="panel-header flex-between">
-            <span>FORENSIC RESTORATION DUAL COMPARISON</span>
-            <span class="sub-badge">LIVE RESTORATION ENGINE</span>
+        <!-- Portal 2: Field Ingest -->
+        <div class="portal-box">
+          <div class="portal-badge-row">
+            <span class="badge-role">TIER 2 • EVIDENCE SEIZURE</span>
+            <span class="badge-tag">FIELD TERMINAL</span>
           </div>
-          <div class="comparison-container">
-            <div class="preview-half">
-              <div class="preview-label raw-label">RAW CORRUPTED FOOTAGE (BEFORE)</div>
-              <canvas id="canvasBefore" width="480" height="270"></canvas>
-            </div>
-            <div class="preview-half">
-              <div class="preview-label enhanced-label">REPAIRED & CALIBRATED (AFTER)</div>
-              <canvas id="canvasAfter" width="480" height="270"></canvas>
-            </div>
+          <h3 class="portal-name">Field Ingestion Officer Portal</h3>
+          <p class="portal-description">
+            Rapid crime-scene physical media acquisition and write-block verification to lock the chain of custody before physical transit to the forensic laboratory.
+          </p>
+          <ul class="portal-feature-list">
+            <li><strong>Hardware WORM Verification:</strong> Confirms physical write-blocker prevents sector mutation.</li>
+            <li><strong>Pre-Flight Hash Lock:</strong> Generates initial master SHA-256 digital fingerprint.</li>
+            <li><strong>Custody Ledger Ingestion:</strong> Directly commits seized artifact metadata to persistent store.</li>
+          </ul>
+          <div class="portal-foot">
+            <a href="/field" class="btn-card-launch">ACCESS INGESTION TERMINAL ➔</a>
           </div>
-          <div class="comparison-status">
-            <span>● 14 Damaged Video Frames Reconstructed</span>
-            <span>● CLAHE Dynamic Range Equalized</span>
+        </div>
+
+        <!-- Portal 3: Judicial Chamber -->
+        <div class="portal-box">
+          <div class="portal-badge-row">
+            <span class="badge-role">TIER 3 • STATUTORY REVIEW</span>
+            <span class="badge-tag">COURTROOM READ-ONLY</span>
+          </div>
+          <h3 class="portal-name">Judicial Magistrate Audit Chamber</h3>
+          <p class="portal-description">
+            Tamper-proof, read-only courtroom terminal allowing prosecutors, judges, and auditors to inspect evidence integrity and export official compliance affidavits.
+          </p>
+          <ul class="portal-feature-list">
+            <li><strong>Cryptographic Pre-Image Proof:</strong> Mathematical validation of bit-for-bit file integrity.</li>
+            <li><strong>Statutory Compliance Audit:</strong> Verifies all four legal conditions of BSA 2023 Section 63.</li>
+            <li><strong>1-Click Court Certificate:</strong> Generates legally admissible Section 63 integrity affidavits.</li>
+          </ul>
+          <div class="portal-foot">
+            <a href="/court" class="btn-card-launch">ACCESS JUDICIAL CHAMBER ➔</a>
           </div>
         </div>
 
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- STAGE 3: CHRONOMESH 4D SYNCHRONIZED MATRIX -->
-    <section id="stage3" class="stage-section">
-      <div class="matrix-grid">
+  <!-- 5 Core Architecture Pillars -->
+  <section id="pillars" class="section-block">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-kicker">ENGINEERING SPECIFICATION</span>
+        <h2 class="section-title">The 5 Core Pillars of ChronoDrishti</h2>
+        <p class="section-desc">Built from the ground up to solve proprietary filesystems, destroyed index tables, and temporal clock drift.</p>
+      </div>
+
+      <div class="pillars-pentagrid">
         
-        <!-- Left: Persistent Audit Log & Drive Tree -->
-        <aside class="matrix-left">
-          <div class="panel-box">
-            <div class="panel-header">SEIZED DRIVE TREE</div>
-            <div class="tree-list">
-              <div class="t-node">📁 PhysicalDrive1 (2.0 TB)</div>
-              <div class="t-node active">├─ 📹 Cam 01: Main Gate [Repaired]</div>
-              <div class="t-node active">├─ 📹 Cam 02: Rear Alley [Carved]</div>
-              <div class="t-node warn">└─ ⚠️ Sector 0x4F00: Demuxed Gap</div>
-            </div>
-          </div>
-          <div class="panel-box term-box">
-            <div class="panel-header">PERSISTENT AUDIT TRAIL (SERVER LOGS)</div>
-            <div class="term-content" id="matrixAuditLog">
-              <!-- Populated dynamically from SQLite database -->
-            </div>
-          </div>
-        </aside>
+        <div class="pillar-card">
+          <div class="pillar-num mono">PILLAR 01</div>
+          <h4 class="pillar-title">Universal Binary Carving & Entropy DNA</h4>
+          <p class="pillar-text">
+            Bypasses Windows "Format Disk" prompts by directly reading raw sectors. Uses Shannon entropy profiling to isolate compressed H.264/H.265 data on unbranded white-label DVRs lacking file tables.
+          </p>
+          <div class="pillar-spec mono">NAL: 0x00000001 (SPS 0x67 / PPS 0x68 / IDR 0x65)</div>
+        </div>
 
-        <!-- Center: CCTV Surveillance Monitors -->
-        <main class="matrix-center panel-box">
-          <div class="panel-header flex-between">
-            <span>CHRONOMESH DUAL-STREAM SYNCHRONIZED MATRIX</span>
-            <span class="sub-badge">PARALLEL SCRUBBER ACTIVE</span>
-          </div>
+        <div class="pillar-card">
+          <div class="pillar-num mono">PILLAR 02</div>
+          <h4 class="pillar-title">Optical 50Hz ENF & Celestial Chronometry</h4>
+          <p class="pillar-text">
+            Extracts subtle 50Hz electrical luminescence fluctuations captured in camera frames via FFT, cross-referencing National Grid (POSOCO) frequency logs to prove exact recording time despite DVR clock drift.
+          </p>
+          <div class="pillar-spec mono">Tolerance: ±0.005 Hz • Solar Azimuth Verification</div>
+        </div>
 
-          <div class="cctv-screens">
-            <div class="screen-box">
-              <div class="screen-tag">CAM 01: MAIN GATE (PRIMARY)</div>
-              <canvas id="canvasMatrix1" width="640" height="360"></canvas>
-              <div class="screen-time" id="matTime1">2026-10-05 22:42:00.000 IST</div>
-            </div>
-            <div class="screen-box">
-              <div class="screen-tag">CAM 02: REAR ALLEY (CARVED STREAM)</div>
-              <canvas id="canvasMatrix2" width="640" height="360"></canvas>
-              <div class="screen-time" id="matTime2">2026-10-05 22:42:14.200 IST</div>
-            </div>
-          </div>
+        <div class="pillar-card">
+          <div class="pillar-num mono">PILLAR 03</div>
+          <h4 class="pillar-title">The Visual Microphone (Shockwaves)</h4>
+          <p class="pillar-text">
+            Applies sub-pixel motion magnification to reflective surfaces (glass windows, fixtures) in silent video to detect high-frequency acoustic pressure waves, pinpointing gunshots and explosions to the exact frame.
+          </p>
+          <div class="pillar-spec mono">Sub-pixel Phase Magnification • Optical Flow</div>
+        </div>
 
-          <!-- Precision Scrubber Toolbar -->
-          <div class="matrix-controls">
-            <div class="scrub-meta">
-              <span id="scrubTimeReadout" class="mono text-teal">22:42:00.000 IST</span>
-              <span id="scrubFrameReadout" class="mono text-muted">FRAME: 0000 / 0120</span>
-            </div>
-            <input type="range" id="matrixTimeline" class="precision-slider" min="0" max="6" step="0.05" value="0">
-            <div class="scrub-buttons">
-              <div class="btn-group">
-                <button class="t-btn" id="btnPrevFrame">|◀</button>
-                <button class="t-btn play-btn" id="btnMatrixPlay">▶ PLAY</button>
-                <button class="t-btn" id="btnNextFrame">▶|</button>
-                <select id="matrixSpeed" class="t-select">
-                  <option value="0.5">0.5x</option>
-                  <option value="1" selected>1.0x</option>
-                  <option value="2">2.0x</option>
-                </select>
-              </div>
-              <button class="t-btn flag-btn" id="btnFlagEvent">+ SAVE BOOKMARK (TO DATABASE)</button>
-            </div>
-          </div>
-        </main>
+        <div class="pillar-card">
+          <div class="pillar-num mono">PILLAR 04</div>
+          <h4 class="pillar-title">ChronoMesh 4D Master Canvas</h4>
+          <p class="pillar-text">
+            Synchronizes fragmented, multi-channel feeds onto a unified master scrubber. Compensates for individual camera clock drift offsets (+14s, -30s) so investigators scrub subjects across all angles in lockstep.
+          </p>
+          <div class="pillar-spec mono">Temporal Multi-Channel Scrub • Zero Re-encode</div>
+        </div>
 
-        <!-- Right: Telemetry & Saved Bookmarks -->
-        <aside class="matrix-right">
-          <div class="panel-box">
-            <div class="panel-header">50Hz POWER GRID (ENF) CORRELATION</div>
-            <div class="enf-score" id="matrixEnfScore">99.8%</div>
-            <div class="enf-sub">MATCH TO NATIONAL POWER GRID (POSOCO)</div>
-            <canvas id="chartEnf" height="110"></canvas>
-          </div>
-          <div class="panel-box">
-            <div class="panel-header flex-between">
-              <span>SAVED EVIDENCE BOOKMARKS (DB)</span>
-              <span class="badge alert">STORED ON SERVER</span>
-            </div>
-            <div class="bookmarks-list" id="bookmarksContainer">
-              <!-- Populated dynamically from SQLite database -->
-            </div>
-          </div>
-        </aside>
+        <div class="pillar-card">
+          <div class="pillar-num mono">PILLAR 05</div>
+          <h4 class="pillar-title">BSA 2023 Section 63 Evidentiary Trust</h4>
+          <p class="pillar-text">
+            Replaces outdated Section 65B certificates with automated statutory affidavits compliant with the Bharatiya Sakshya Adhiniyam, 2023. Documents exact physical sector ranges and immutable hash-chains.
+          </p>
+          <div class="pillar-spec mono">ISO/IEC 27037:2012 • SHA-256 Merkle Ledger</div>
+        </div>
 
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- STAGE 4: BSA 2023 JUDICIAL EVIDENCE VAULT -->
-    <section id="stage4" class="stage-section">
-      <div class="court-grid">
-        <div class="panel-box court-card">
-          <div class="panel-header">BHARATIYA SAKSHYA ADHINIYAM (BSA), 2023 - SECTION 63 CERTIFICATE</div>
-          <div class="court-badge-strip">
-            <span class="badge write-blocked">● BIT-STREAM INTEGRITY SEALED</span>
-            <span class="badge air-gap">CHAIN OF CUSTODY VERIFIED (SQLITE PERSISTENT)</span>
-          </div>
-          <pre class="affidavit-preview mono" id="affidavitPreview">Generating Section 63 statutory certificate from database...</pre>
-          <div class="court-actions">
-            <button id="btnDownloadCert" class="btn-primary-large">📥 DOWNLOAD SIGNED SECTION 63 AFFIDAVIT (.TXT)</button>
-          </div>
+  <!-- Technical Benchmarking Table (Magnet vs SalvationDATA vs ChronoDrishti) -->
+  <section id="benchmark" class="section-block bg-elevated">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-kicker">COMPETITIVE DIFFERENTIATION</span>
+        <h2 class="section-title">Forensic Capabilities Benchmark</h2>
+        <p class="section-desc">Comparing ChronoDrishti against legacy proprietary and foreign surveillance investigation suites.</p>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="benchmark-table">
+          <thead>
+            <tr>
+              <th>Evaluation Parameter</th>
+              <th class="col-highlight">ChronoDrishti (Sovereign)</th>
+              <th>Magnet DVR Examiner (USA)</th>
+              <th>SalvationDATA VIP (China)</th>
+              <th>Amped Replay (Italy)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Unbranded White-Label DVRs</strong></td>
+              <td class="col-highlight text-highlight">Entropy DNA Profiler (Supported)</td>
+              <td>Fails on undocumented chipsets</td>
+              <td>Limited generic signatures</td>
+              <td>Inapplicable (Player only)</td>
+            </tr>
+            <tr>
+              <td><strong>Temporal Authenticity</strong></td>
+              <td class="col-highlight text-highlight">50Hz Optical ENF + Solar Azimuth</td>
+              <td>Unverified DVR internal clock</td>
+              <td>Unverified DVR internal clock</td>
+              <td>Manual timestamp alignment</td>
+            </tr>
+            <tr>
+              <td><strong>Silent Acoustic Extraction</strong></td>
+              <td class="col-highlight text-highlight">Visual Microphone Shockwave Graph</td>
+              <td>Not supported</td>
+              <td>Not supported</td>
+              <td>Audio enhancement only</td>
+            </tr>
+            <tr>
+              <td><strong>Indian Legal Admissibility</strong></td>
+              <td class="col-highlight text-highlight">Automated BSA 2023 Sec 63 PDF</td>
+              <td>Lacks Indian statutory reporting</td>
+              <td>Foreign format; court challenges</td>
+              <td>No legal affidavit generator</td>
+            </tr>
+            <tr>
+              <td><strong>National Security Supply-Chain</strong></td>
+              <td class="col-highlight text-highlight">100% Air-Gapped Sovereign Node</td>
+              <td>₹10–15 Lakhs/year per seat</td>
+              <td>Critical data-exfiltration risk</td>
+              <td>High annual recurring fee</td>
+            </tr>
+            <tr>
+              <td><strong>Memory Architecture</strong></td>
+              <td class="col-highlight text-highlight">mmap Windowing (&lt;300MB RAM)</td>
+              <td>Heavy memory requirements</td>
+              <td>High footprint on multi-TB drives</td>
+              <td>Standard desktop buffering</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Institutional Footer -->
+  <!-- Institutional Footer (Clean & Redundancy-Free) -->
+  <footer class="master-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-title">NATIONAL TECHNICAL RESEARCH ORGANISATION (NTRO)</div>
+        <p class="footer-copy">Cyber Forensics & Strategic Signal Analysis Directorate • Government of India</p>
+        <div class="footer-standards">
+          <span>BSA 2023 SEC 63</span>
+          <span>•</span>
+          <span>ISO/IEC 27037:2012</span>
+          <span>•</span>
+          <span>FIPS PUB 180-4 (SHA-256)</span>
+          <span>•</span>
+          <span>ITU-T H.264 / AVC</span>
         </div>
       </div>
-    </section>
+      
+      <!-- Operational Node Telemetry (No Redundant Links) -->
+      <div class="footer-right-telemetry">
+        <div class="foot-tele-tag"><span class="lbl">ENVIRONMENT:</span> AIR-GAPPED SANDBOX</div>
+        <div class="foot-tele-tag"><span class="lbl">CLEARANCE:</span> LEVEL 2+ AUTHORIZED</div>
+        <div class="foot-tele-tag mono"><span class="lbl">NODE HASH:</span> SHA-256 VERIFIED</div>
+      </div>
+    </div>
+  </footer>
 
-  </div>
-
-  <script src="/static/js/app.js"></script>
 </body>
 </html>

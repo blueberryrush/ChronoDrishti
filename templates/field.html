@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChronoDrishti | Field Ingestion Terminal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <header class="master-header">
+    <div class="header-inner">
+      <a href="/" class="brand-group">
+        <div class="brand-crest">
+          <svg width="24" height="24" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="26" stroke="#1E3A2B" stroke-width="2" />
+            <circle cx="32" cy="32" r="6" fill="#10B981" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">CHRONODRISHTI <span class="brand-badge">FIELD INGESTION</span></div>
+          <div class="brand-subtitle">TIER 2 EVIDENCE CHAIN OF CUSTODY</div>
+        </div>
+      </a>
+      <div><a href="/" class="btn-home-return">◀ PORTAL DIRECTORY</a></div>
+    </div>
+  </header>
+
+  <main class="page-container">
+    <div class="portal-banner">
+      <div>
+        <div class="portal-badge-tag">TIER 2 ACTIVE: FIELD OFFICER MEDIA INGESTION</div>
+        <div class="portal-case-info">PHYSICAL CRIME-SCENE MEDIA SEIZURE & HASH LOCK</div>
+      </div>
+    </div>
+
+    <div class="grid-field">
+      <!-- Ingestion Form with Real Upload -->
+      <div class="card-grey">
+        <div class="pane-head">INGEST SEIZED CCTV MEDIA / DISK ARTIFACT</div>
+        <form id="fieldUploadForm" class="ingest-form" enctype="multipart/form-data">
+          <div class="form-row">
+            <label>Case FIR Number *</label>
+            <input type="text" id="fiFir" name="fir_number" value="FIR-2026/DELHI-SPL-089" required>
+          </div>
+          <div class="form-row">
+            <label>Police Station / Agency *</label>
+            <input type="text" id="fiPS" name="police_station" value="Special Cell, Northern Range" required>
+          </div>
+          <div class="form-row">
+            <label>DVR Device Model *</label>
+            <input type="text" id="fiDevice" name="seized_device" value="Hikvision DS-7208HQHI (2TB HDD)" required>
+          </div>
+          <div class="form-row">
+            <label>Seizing Officer *</label>
+            <input type="text" id="fiOfficer" name="officer" value="Insp. S. Sharma [NTRO-CYBER-884]" required>
+          </div>
+          <div class="form-row">
+            <label style="color:#065F46; font-weight:800;">SELECT REAL FOOTAGE / ARTIFACT (.MP4, .AVI) *</label>
+            <input type="file" id="evidenceFile" name="evidence_file" accept="video/*" required style="background:#E6F7EE; border:1.5px dashed #10B981; padding:12px;">
+          </div>
+          <button type="submit" class="btn-subtle" style="margin-top:10px; font-size:12px;">
+            🔒 EXECUTE WRITE-BLOCK BITSTREAM INGESTION & LOCK HASH ➔
+          </button>
+        </form>
+      </div>
+
+      <!-- Live Hash Monitor -->
+      <div class="card-grey">
+        <div class="pane-head">CHAIN OF CUSTODY LIVE STATUS</div>
+        <div class="ingest-monitor">
+          <div class="hw-item">
+            <span class="hw-k">Hardware Write-Block:</span>
+            <span class="hw-v" style="color:#10B981;">ACTIVE (Read-Only Tableau T8u)</span>
+          </div>
+          <div class="hw-item">
+            <span class="hw-k">Ingested File:</span>
+            <span class="hw-v mono" id="ingestFileName">None</span>
+          </div>
+          <div class="hw-item">
+            <span class="hw-k">Computed SHA-256 Hash:</span>
+            <span class="hw-v mono text-accent" id="ingestHash" style="word-break:break-all; font-size:10px;">Waiting for upload...</span>
+          </div>
+          <div class="hw-item">
+            <span class="hw-k">WORM Vault State:</span>
+            <span class="hw-v" style="color:#10B981;">Secured in local repository</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("fieldUploadForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const btn = this.querySelector("button");
+      btn.innerText = "CALCULATING SHA-256 & LOCKING HASH...";
+      btn.disabled = true;
+
+      fetch("/api/cases/upload", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert("✅ Media successfully ingested into WORM Vault!\nMaster SHA-256: " + data.hash);
+        document.getElementById("ingestFileName").innerText = data.filename;
+        document.getElementById("ingestHash").innerText = data.hash;
+        btn.innerText = "🔒 EXECUTE WRITE-BLOCK BITSTREAM INGESTION & LOCK HASH ➔";
+        btn.disabled = false;
+      })
+      .catch(err => {
+        alert("Upload error");
+        btn.disabled = false;
+      });
+    });
+  </script>
+</body>
+</html>
