@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ChronoDrishti | Field Ingestion Terminal</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -57,9 +58,9 @@
           </div>
           <div class="form-row">
             <label style="color:#065F46; font-weight:800;">SELECT REAL FOOTAGE / ARTIFACT (.MP4, .AVI) *</label>
-            <input type="file" id="evidenceFile" name="evidence_file" accept="video/*" required style="background:#E6F7EE; border:1.5px dashed #10B981; padding:12px;">
+            <input type="file" id="evidenceFile" name="evidence_file" accept=".mp4, .avi, video/*" required style="background:#E6F7EE; border:1.5px dashed #10B981; padding:12px;">
           </div>
-          <button type="submit" class="btn-subtle" style="margin-top:10px; font-size:12px;">
+          <button type="submit" id="btnSubmitIngest" class="btn-subtle" style="margin-top:10px; font-size:12px;">
             🔒 EXECUTE WRITE-BLOCK BITSTREAM INGESTION & LOCK HASH ➔
           </button>
         </form>
@@ -74,12 +75,16 @@
             <span class="hw-v" style="color:#10B981;">ACTIVE (Read-Only Tableau T8u)</span>
           </div>
           <div class="hw-item">
-            <span class="hw-k">Ingested File:</span>
+            <span class="hw-k">Ingested Raw File:</span>
             <span class="hw-v mono" id="ingestFileName">None</span>
           </div>
           <div class="hw-item">
             <span class="hw-k">Computed SHA-256 Hash:</span>
-            <span class="hw-v mono text-accent" id="ingestHash" style="word-break:break-all; font-size:10px;">Waiting for upload...</span>
+            <span class="hw-v mono text-accent" id="ingestHash" style="word-break:break-all; font-size:11px;">Waiting for upload...</span>
+          </div>
+          <div class="hw-item">
+            <span class="hw-k">OpenCV CLAHE Processing:</span>
+            <span class="hw-v" id="processingStatus" style="color:#10B981;">Ready</span>
           </div>
           <div class="hw-item">
             <span class="hw-k">WORM Vault State:</span>
@@ -90,31 +95,6 @@
     </div>
   </main>
 
-  <script>
-    document.getElementById("fieldUploadForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      const btn = this.querySelector("button");
-      btn.innerText = "CALCULATING SHA-256 & LOCKING HASH...";
-      btn.disabled = true;
-
-      fetch("/api/cases/upload", {
-        method: "POST",
-        body: formData
-      })
-      .then(res => res.json())
-      .then(data => {
-        alert("✅ Media successfully ingested into WORM Vault!\nMaster SHA-256: " + data.hash);
-        document.getElementById("ingestFileName").innerText = data.filename;
-        document.getElementById("ingestHash").innerText = data.hash;
-        btn.innerText = "🔒 EXECUTE WRITE-BLOCK BITSTREAM INGESTION & LOCK HASH ➔";
-        btn.disabled = false;
-      })
-      .catch(err => {
-        alert("Upload error");
-        btn.disabled = false;
-      });
-    });
-  </script>
+  <script src="{{ url_for('static', filename='js/field.js') }}"></script>
 </body>
 </html>

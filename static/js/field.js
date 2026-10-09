@@ -1,37 +1,44 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("fieldIngestForm");
-  const logsContainer = document.getElementById("fieldLogsContainer");
+  const form = document.getElementById("fieldUploadForm");
+  const btnSubmit = document.getElementById("btnSubmitIngest");
+  const ingestFileName = document.getElementById("ingestFileName");
+  const ingestHash = document.getElementById("ingestHash");
+  const processingStatus = document.getElementById("processingStatus");
 
-  function loadLogs() {
-    fetch("/api/audit-logs/case_101").then(r => r.json()).then(data => {
-      logsContainer.innerHTML = "";
-      data.logs.forEach(l => {
-        const div = document.createElement("div");
-        div.innerHTML = `<div><span class="text-dim">[${l.created_at || l.timestamp}]</span> <strong>${l.action}:</strong> ${l.details}</div>`;
-        logsContainer.appendChild(div);
+  if (form) {
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      btnSubmit.innerText = "⚙️ PROCESSING OPENCV CLAHE & COMPUTING SHA-256...";
+      btnSubmit.disabled = true;
+      if (processingStatus) processingStatus.innerText = "Processing CLAHE & SHA-256...";
+
+      fetch("/api/cases/upload", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Upload failed");
+        return res.json();
+      })
+      .then(data => {
+        if (ingestFileName) ingestFileName.innerText = data.filename || "Uploaded File";
+        if (ingestHash) ingestHash.innerText = data.hash || "Hash generated";
+        if (processingStatus) processingStatus.innerText = "COMPLETED (CLAHE Stream Ready)";
+
+        alert(`✅ Media successfully ingested into WORM Vault!\nCase ID: ${data.case_id}\nMaster SHA-256: ${data.hash}`);
+
+        btnSubmit.innerText = "🔒 EXECUTE WRITE-BLOCK BITSTREAM INGESTION & LOCK HASH ➔";
+        btnSubmit.disabled = false;
+      })
+      .catch(err => {
+        console.error("Upload error:", err);
+        alert("⚠️ Ingestion error: " + err.message);
+        if (processingStatus) processingStatus.innerText = "Error during ingestion";
+        btnSubmit.innerText = "🔒 EXECUTE WRITE-BLOCK BITSTREAM INGESTION & LOCK HASH ➔";
+        btnSubmit.disabled = false;
       });
     });
   }
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const fir = document.getElementById("fiFir").value;
-    const ps = document.getElementById("fiPS").value;
-    const dev = document.getElementById("fiDevice").value;
-    const off = document.getElementById("fiOfficer").value;
-
-    fetch("/api/cases/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fir_number: fir, police_station: ps, seized_device: dev, officer: off })
-    })
-    .then(r => r.json())
-    .then(res => {
-      alert(`Media Artifact Ingested Successfully!\nGenerated SHA-256: ${res.hash}`);
-      form.reset();
-      loadLogs();
-    });
-  });
-
-  loadLogs();
 });

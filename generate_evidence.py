@@ -42,7 +42,7 @@ def create_clip(path, title, duration=6, fps=20, event_at_sec=3.0):
 
         out.write(frame)
     out.release()
-    print(f"[✔] Created: {path}")
+    print(f"[OK] Created: {path}")
 
 if __name__ == "__main__":
     print("Generating simulated evidence files...")

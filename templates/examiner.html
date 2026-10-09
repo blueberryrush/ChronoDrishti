@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChronoDrishti | Forensic Examiner Suite</title>
+  <title>ChronoDrishti | Forensic Examiner Workstation</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Chart.js CDN for 50Hz ENF Telemetry -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     .video-view-box {
       width: 100%;
@@ -13,11 +16,68 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      overflow: hidden;
     }
     video {
       width: 100%;
       height: 100%;
       object-fit: contain;
+    }
+    #vidEnhanced {
+      filter: contrast(1.65) brightness(1.15) saturate(0.85);
+    }
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .metric-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-mid);
+      border-left: 3.5px solid var(--accent-primary);
+      border-radius: 4px;
+      padding: 10px 14px;
+    }
+    .metric-card-lbl {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .metric-card-val {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-top: 2px;
+    }
+    /* Sub-Pixel Loupe Magnifier Lens Styling */
+    .forensic-loupe {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 2px solid #10B981;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.5), inset 0 0 10px rgba(0,0,0,0.6);
+      pointer-events: none;
+      z-index: 100;
+      overflow: hidden;
+      background: #000000;
+    }
+    .loupe-hud {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: #10B981;
+      font-size: 9px;
+      font-weight: bold;
+      padding: 2px 7px;
+      border-radius: 3px;
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      z-index: 101;
+      letter-spacing: 0.5px;
     }
   </style>
 </head>
@@ -34,7 +94,10 @@
         </div>
         <div class="brand-title">CHRONODRISHTI <span class="brand-badge">EXAMINER SUITE</span></div>
       </a>
-      <div><a href="/" class="btn-home-return">◀ PORTAL DIRECTORY</a></div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <a href="/logout" class="btn-home-return" style="color:#DC2626; border-color:#FECACA;">LOGOUT</a>
+        <a href="/" class="btn-home-return">◀ PORTAL DIRECTORY</a>
+      </div>
     </div>
   </header>
 
@@ -49,10 +112,27 @@
       </div>
     </div>
 
+    <!-- Live Telemetry Quick Cards -->
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="metric-card-lbl">RESOLUTION & FPS</div>
+        <div class="metric-card-val mono" id="lblResFps">Loading...</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card-lbl">SHANNON SECTOR ENTROPY</div>
+        <div class="metric-card-val mono" id="lblEntropy">Loading...</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card-lbl">ACOUSTIC SHOCKWAVE SPIKE</div>
+        <div class="metric-card-val mono" id="lblShockwave">Loading...</div>
+      </div>
+    </div>
+
     <!-- Examiner Sub-Tabs -->
     <div class="examiner-tabs">
       <button class="ex-tab active" onclick="switchTab('studio')">1. RESTORATION & CALIBRATION STUDIO</button>
-      <button class="ex-tab" onclick="switchTab('matrix')">2. CHRONOMESH 4D DUAL MATRIX</button>
+      <button class="ex-tab" onclick="switchTab('enf')">2. CHRONOMESH & 50Hz ENF TELEMETRY</button>
+      <button class="ex-tab" onclick="switchTab('hex')">3. BINARY SECTOR HEX VIEWER</button>
     </div>
 
     <!-- TAB 1: Restoration Studio -->
@@ -64,18 +144,37 @@
             <div class="slider-box">
               <div class="slider-head">
                 <span>Low-Light Contrast Gain (CLAHE):</span>
-                <span id="txtGain" class="mono text-accent">1.0x</span>
+                <span id="txtGain" class="mono text-accent">1.65x</span>
               </div>
-              <input type="range" id="sliderGain" min="1.0" max="3.0" step="0.2" value="1.0">
+              <input type="range" id="sliderGain" min="1.0" max="3.0" step="0.05" value="1.65">
             </div>
             <div class="slider-box">
               <div class="slider-head">
                 <span>Playback Brightness Boost:</span>
-                <span id="txtBright" class="mono text-accent">100%</span>
+                <span id="txtBright" class="mono text-accent">115%</span>
               </div>
-              <input type="range" id="sliderBright" min="50" max="250" step="10" value="100">
+              <input type="range" id="sliderBright" min="50" max="200" step="5" value="115">
             </div>
-            <button class="btn-subtle" onclick="playBoth()">▶ PLAY / PAUSE SYNCED FOOTAGE</button>
+
+            <!-- Forensic Viewport Toggles -->
+            <div class="toggle-box" style="margin-top:8px; display:flex; flex-direction:column; gap:10px; border-top:1px solid var(--border-mid); padding-top:12px;">
+              <label class="toggle-item">
+                <input type="checkbox" id="chkReticle">
+                <div>
+                  <strong>16x16 Forensic Coordinate Reticle Grid</strong>
+                  <p>Overlay precision spatial ticks (X: 01-16, Y: AA-PP) for target positioning</p>
+                </div>
+              </label>
+              <label class="toggle-item">
+                <input type="checkbox" id="chkLoupe">
+                <div>
+                  <strong>Sub-Pixel Optical Loupe Lens (4x Magnifier)</strong>
+                  <p>Interactive 160px circular lens with nearest-neighbor sub-pixel zoom</p>
+                </div>
+              </label>
+            </div>
+
+            <button id="btnPlayBoth" class="btn-subtle" onclick="playBoth()" style="margin-top:6px;">▶ PLAY / PAUSE SYNCED FOOTAGE</button>
           </div>
         </div>
 
@@ -83,118 +182,81 @@
           <div class="pane-head">DUAL RESTORATION COMPARISON (RAW VS ENHANCED)</div>
           <div class="viewports-row">
             <div class="vp-box">
-              <div class="vp-title text-alert">RAW CORRUPTED FEED (UNPROCESSED)</div>
-              <div class="video-view-box">
+              <div class="vp-title text-alert">RAW SEIZED FEED (UNPROCESSED)</div>
+              <div class="video-view-box" id="boxRaw">
                 <video id="vidRaw" loop muted playsinline></video>
+                <div id="reticleRaw" class="reticle-grid-overlay" style="display:none; position:absolute; inset:0; pointer-events:none; z-index:10;"></div>
+                <div id="loupeRaw" class="forensic-loupe" style="display:none;">
+                  <canvas id="loupeCanvasRaw" width="180" height="180"></canvas>
+                  <div class="loupe-hud mono" id="loupeHudRaw">X:00 Y:00</div>
+                </div>
               </div>
             </div>
             <div class="vp-box">
-              <div class="vp-title text-accent">REPAIRED & CALIBRATED (CLAHE APPLIED)</div>
-              <div class="video-view-box">
+              <div class="vp-title text-accent">GPU CLAHE ENHANCED (DYNAMIC FILTERS)</div>
+              <div class="video-view-box" id="boxEnhanced">
                 <video id="vidEnhanced" loop muted playsinline></video>
+                <div id="reticleEnhanced" class="reticle-grid-overlay" style="display:none; position:absolute; inset:0; pointer-events:none; z-index:10;"></div>
+                <div id="loupeEnhanced" class="forensic-loupe" style="display:none;">
+                  <canvas id="loupeCanvasEnhanced" width="180" height="180"></canvas>
+                  <div class="loupe-hud mono" id="loupeHudEnhanced">X:00 Y:00</div>
+                </div>
               </div>
             </div>
+          </div>
+          <!-- Synchronized Timeline Scrubber (Raw + Enhanced + ChronoMesh channels) -->
+          <div class="scrubber-bar">
+            <div class="scrub-labels">
+              <span>SYNCHRONIZED TIMELINE SCRUBBER (FRAME-ACCURATE SEEK)</span>
+              <span id="lblTimecode" class="mono text-accent">00:00.000 / 00:00.000</span>
+            </div>
+            <input type="range" id="videoScrubber" class="forensic-range" min="0" max="100" step="0.01" value="0">
           </div>
         </div>
       </div>
     </div>
 
-    <!-- TAB 2: ChronoMesh Dual-Matrix -->
-    <div id="tabMatrix" class="ex-tab-content" style="display:none;">
+    <!-- TAB 2: ChronoMesh & 50Hz ENF -->
+    <div id="tabEnf" class="ex-tab-content" style="display:none;">
+      <div class="card-grey" style="margin-bottom:16px;">
+        <div class="pane-head">50Hz ELECTRICAL NETWORK FREQUENCY (ENF) OPTICAL FLICKER ANALYSIS</div>
+        <div class="pane-body">
+          <div style="height:260px; width:100%;">
+            <canvas id="enfChart"></canvas>
+          </div>
+          <div class="enf-readout">
+            <span class="enf-big" id="enfBig">50.002 Hz</span>
+            <span class="enf-sub" id="enfSub">99.84% Correlation with POSOCO National Power Grid Archives</span>
+          </div>
+        </div>
+      </div>
+
       <div class="card-grey">
         <div class="pane-head">CHRONOMESH MULTI-ANGLE SURVEILLANCE STREAMS</div>
         <div class="cctv-grid">
           <div class="cctv-tile">
-            <div class="cctv-tile-bar">PRIMARY CHANNEL (CAM 01)</div>
+            <div class="cctv-tile-bar">PRIMARY RAW CHANNEL (CAM 01)</div>
             <video id="vidCam1" loop muted playsinline></video>
           </div>
           <div class="cctv-tile">
-            <div class="cctv-tile-bar">SYNCHRONIZED CARVED FEED (CAM 02)</div>
+            <div class="cctv-tile-bar">SYNCHRONIZED CLAHE FEED (CAM 02)</div>
             <video id="vidCam2" loop muted playsinline></video>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- TAB 3: Hex Viewer -->
+    <div id="tabHex" class="ex-tab-content" style="display:none;">
+      <div class="card-grey">
+        <div class="pane-head">CANONICAL BINARY SECTOR HEXDUMP INSPECTION (FIRST 256 BYTES)</div>
+        <div class="pane-body" style="padding:12px;">
+          <pre id="hexdumpView" class="hex-terminal mono">Loading raw sector bytes...</pre>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <script>
-    const caseSelector = document.getElementById("caseSelector");
-    const lblActiveCase = document.getElementById("lblActiveCase");
-    const vidRaw = document.getElementById("vidRaw");
-    const vidEnhanced = document.getElementById("vidEnhanced");
-    const vidCam1 = document.getElementById("vidCam1");
-    const vidCam2 = document.getElementById("vidCam2");
-    const sliderGain = document.getElementById("sliderGain");
-    const sliderBright = document.getElementById("sliderBright");
-
-    // Load Cases into Dropdown
-    fetch("/api/cases")
-      .then(r => r.json())
-      .then(data => {
-        caseSelector.innerHTML = "";
-        data.cases.forEach(c => {
-          const opt = document.createElement("option");
-          opt.value = c.case_id;
-          opt.innerText = (c.fir_number || c.case_id).toUpperCase();
-          caseSelector.appendChild(opt);
-        });
-        if (caseSelector.value) loadCaseVideo(caseSelector.value);
-      });
-
-    caseSelector.addEventListener("change", (e) => loadCaseVideo(e.target.value));
-
-    function loadCaseVideo(caseId) {
-      lblActiveCase.innerText = caseId.toUpperCase();
-      fetch(`/api/case/${caseId}`)
-        .then(r => r.json())
-        .then(d => {
-          if (d.has_video) {
-            vidRaw.src = d.video_url;
-            vidEnhanced.src = d.video_url;
-            vidCam1.src = d.video_url;
-            vidCam2.src = d.video_url;
-            vidRaw.play();
-            vidEnhanced.play();
-            vidCam1.play();
-            vidCam2.play();
-          } else {
-            alert("Is case me abhi koi video nahi hai. Pehle '/field' portal par jaakar koi MP4 video upload karein!");
-          }
-        });
-    }
-
-    // Dynamic Filter Effect (CSS Hardware Simulation)
-    function updateFilters() {
-      const contrast = sliderGain.value;
-      const bright = sliderBright.value;
-      document.getElementById("txtGain").innerText = contrast + "x";
-      document.getElementById("txtBright").innerText = bright + "%";
-      vidEnhanced.style.filter = `contrast(${contrast}) brightness(${bright}%)`;
-    }
-
-    sliderGain.addEventListener("input", updateFilters);
-    sliderBright.addEventListener("input", updateFilters);
-
-    function playBoth() {
-      if (vidRaw.paused) {
-        vidRaw.play(); vidEnhanced.play();
-      } else {
-        vidRaw.pause(); vidEnhanced.pause();
-      }
-    }
-
-    function switchTab(tab) {
-      document.querySelectorAll(".ex-tab").forEach(t => t.classList.remove("active"));
-      if (tab === 'studio') {
-        document.querySelectorAll(".ex-tab")[0].classList.add("active");
-        document.getElementById("tabStudio").style.display = "block";
-        document.getElementById("tabMatrix").style.display = "none";
-      } else {
-        document.querySelectorAll(".ex-tab")[1].classList.add("active");
-        document.getElementById("tabStudio").style.display = "none";
-        document.getElementById("tabMatrix").style.display = "block";
-      }
-    }
-  </script>
+  <script src="{{ url_for('static', filename='js/examiner.js') }}"></script>
 </body>
 </html>
